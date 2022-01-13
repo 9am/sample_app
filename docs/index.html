@@ -8,7 +8,7 @@
 <body>
     <img src="https://github.com/9am/sample_app/releases/download/test/test.png">
     <script>
-        const loadImage(url = '') => {
+        const loadImage = (url = '') => {
             return new Promise((resolve, reject) => {
                 let img = new Image();
                 img.crossOrigin = 'anonymous';
@@ -30,8 +30,15 @@
         }
 
         (async () => {
-            const output = await loadImage('https://github.com/9am/sample_app/releases/download/test/test.png');
-            console.log('same origin', output);
+            try {
+                const data = await fetch('https://api.github.com/repos/9am/sample_app/issues?filter=created').then(res => res.json());
+                console.log('success', data);
+
+                const output = await loadImage('https://github.com/9am/sample_app/releases/download/test/test.png');
+                console.log('ok', output);
+            } catch (err) {
+                console.log('fail', err);
+            }
         })();
 
     </script>
