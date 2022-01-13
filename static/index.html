@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="utf8">
+    <title>
+        test
+    </title>
+</head>
+<body>
+    <img src="https://github.com/9am/sample_app/releases/download/test/test.png">
+    <script>
+        const loadImage(url = '') => {
+            return new Promise((resolve, reject) => {
+                let img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+                        resolve(ctx.getImageData(0, 0, img.width, img.height));
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                img.onerror = error => reject(error);
+                img.src = url;
+            });
+        }
+
+        (async () => {
+            const output = await loadImage('https://github.com/9am/sample_app/releases/download/test/test.png');
+            console.log('same origin', output);
+        })();
+
+    </script>
+</body>
+</html>
