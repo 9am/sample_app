@@ -1,54 +1,75 @@
 <!DOCTYPE html>
 <html>
-<head> <meta charset="utf8">
-    <title>
-        test
-    </title>
+<head>
+    <meta charset="utf-8">
+    <title>test api</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: content-box;
+        }
+    </style>
 </head>
 <body>
-    <img src="https://github.com/9am/sample_app/releases/download/test/test.png">
-    <img src="./nail.png">
-    <script>
-        const loadImage = (url = '') => {
-            return new Promise((resolve, reject) => {
-                let img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.onload = () => {
-                    try {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        ctx.drawImage(img, 0, 0);
-                        resolve(ctx.getImageData(0, 0, img.width, img.height));
-                    } catch (error) {
-                        reject(error);
-                    }
-                };
-                img.onerror = error => reject(error);
-                img.src = url;
+    <button id="more">
+        test
+    </button>
+    <main>
+    </main>
+    <script type="module" src="./js/imgVictor.js"></script>
+    <script type="module">
+        const loadMore = ({
+            page = 1,
+            perPage = 2
+        }) => {
+            return fetch(
+                `https://api.github.com/repos/9am/sample_app/issues?creator=9am&per_page=${perPage}&page=${page}`,
+                {
+                    headers: [['Accept', 'application/vnd.github.v3+json']],
+                },
+            ).then(res => res.json());
+        };
+
+        const template = document.createElement('template');
+        const tmp = ({ href, src }) => `
+            <a href="${href}" target="_blank">
+                <img-victor src="${src}"></img-victor>
+            </a>
+        `;
+        const createItem = ({ body, html_url: url }) => {
+            const file = body.match(/^(.+)\/([^\/\)]+)\)/)[2];
+            template.innerHTML = tmp({
+                href: url,
+                src: `https://ik.imagekit.io/94av7hg7apo/${file}`,
             });
-        }
+            return template.content.cloneNode(true);
+        };
 
         (async () => {
-            try {
-                const data = await fetch('https://api.github.com/repos/9am/sample_app/issues?filter=created').then(res => res.json());
-                console.log('success', data);
+            let currPage = 1;
 
-                const output = await loadImage('https://github.com/9am/sample_app/releases/download/test/test.png');
-                console.log('ok', output);
-            } catch (err) {
-                console.log('fail', err);
-            }
-
-            try {
-                const output1 = await loadImage('https://user-images.githubusercontent.com/1435457/149445506-553d944b-d0f2-469d-913f-2649199aab1b.jpeg');
-                console.log('ok1', output1);
-            } catch (err) {
-                console.log('fail1', err);
-            }
+            const main = document.querySelector('main');
+            const btn = document.querySelector('#more');
+            btn.addEventListener('click', async () => {
+                try {
+                    const result = await loadMore({ page: currPage });
+                    console.log('loaded:', result);
+                    if (result.length) {
+                        const ele = result.reduce((container, data) => {
+                            container.appendChild(createItem(data));
+                            return container;
+                        }, document.createDocumentFragment());
+                        main.appendChild(ele);
+                        currPage++;
+                    } else {
+                        btn.setAttribute('disabled', '');
+                    }
+                } catch (err) {
+                    console.log('fail to load:', err);
+                }
+            });
         })();
-
     </script>
 </body>
 </html>
