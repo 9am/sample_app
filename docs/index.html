@@ -35,10 +35,17 @@
                 const data = await fetch('https://api.github.com/repos/9am/sample_app/issues?filter=created').then(res => res.json());
                 console.log('success', data);
 
-                const output = await loadImage('./nail.png');
+                const output = await loadImage('https://github.com/9am/sample_app/releases/download/test/test.png');
                 console.log('ok', output);
             } catch (err) {
                 console.log('fail', err);
+            }
+
+            try {
+                const output1 = await loadImage('https://user-images.githubusercontent.com/1435457/149445506-553d944b-d0f2-469d-913f-2649199aab1b.jpeg');
+                console.log('ok1', output1);
+            } catch (err) {
+                console.log('fail1', err);
             }
         })();
 
