@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch
-      - uses: actions/github-script@v5
+        uses: actions/github-script@v5
         id: set-result
         with:
           script: |
