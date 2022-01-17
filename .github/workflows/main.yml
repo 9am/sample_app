@@ -40,13 +40,14 @@ jobs:
             }
             const result = await github.graphql(query, variables)
             const output = JSON.stringify(result, null, 2)
+            console.log('output', output);
             return output
           result-encoding: string
       - name: Checkout
         uses: actions/checkout@v2
       - name: Push data
         run: |
-          echo "${{steps.set-result.outputs.result}}" > ./docs/data.json
+          echo '${{steps.set-result.outputs.result}}' > ./docs/data.json
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add ./docs/data.json
