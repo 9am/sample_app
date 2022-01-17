@@ -1,1 +1,46 @@
-{repository:{issues:{nodes:[{id:MDU6SXNzdWU5MTExMzYzMjA=,title:test1,publishedAt:2021-06-04T05:36:28Z,url:https://github.com/9am/sample_app/issues/2,labels:{nodes:[{name:test}]}},{id:I_kwDOAMKUeM5Bvonh,title:test2,publishedAt:2022-01-14T05:25:21Z,url:https://github.com/9am/sample_app/issues/3,labels:{nodes:[{name:enhancement},{name:question}]}},{id:I_kwDOAMKUeM5BxDpg,title:test3,publishedAt:2022-01-14T09:55:16Z,url:https://github.com/9am/sample_app/issues/5,labels:{nodes:[]}}]}}}
+{
+  repository: {
+    issues: {
+      nodes: [
+        {
+          id: MDU6SXNzdWU5MTExMzYzMjA=,
+          title: test1,
+          publishedAt: 2021-06-04T05:36:28Z,
+          url: https://github.com/9am/sample_app/issues/2,
+          labels: {
+            nodes: [
+              {
+                name: test
+              }
+            ]
+          }
+        },
+        {
+          id: I_kwDOAMKUeM5Bvonh,
+          title: test2,
+          publishedAt: 2022-01-14T05:25:21Z,
+          url: https://github.com/9am/sample_app/issues/3,
+          labels: {
+            nodes: [
+              {
+                name: enhancement
+              },
+              {
+                name: question
+              }
+            ]
+          }
+        },
+        {
+          id: I_kwDOAMKUeM5BxDpg,
+          title: test3,
+          publishedAt: 2022-01-14T09:55:16Z,
+          url: https://github.com/9am/sample_app/issues/5,
+          labels: {
+            nodes: []
+          }
+        }
+      ]
+    }
+  }
+}
