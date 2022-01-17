@@ -14,7 +14,7 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
-            const query = `query($owner:String!, $name:String!, $label:String!) {
+            const query = `query($owner:String!, $name:String!) {
               repository(owner:$owner, name:$name){
                 issues(first:100) {
                   nodes {
