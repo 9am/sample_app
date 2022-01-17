@@ -11,8 +11,8 @@ jobs:
   list-issues:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch API
-        uses: actions/github-script@v5
+      - name: Fetch
+      - uses: actions/github-script@v5
         id: set-result
         with:
           script: |
@@ -35,12 +35,13 @@ jobs:
             const output = JSON.stringify(result, null, 2);
             console.log(output)
             return output
-      - name: Use
+      - name: Checkout
         uses: actions/checkout@v2
-      - name: Commit data file
+      - name: Push data
         run: |
-          echo "${{steps.set-result.outputs.result}}" > ./data.json
-          git config --global user.name '9am'
-          git config --global user.email 'gbgogb@gmail.com'
-          git commit -am "Automated data"
+          echo "${{steps.set-result.outputs.result}}" > ./docs/data.json
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ./docs/data.json
+          git commit -m "automated data"
           git push
