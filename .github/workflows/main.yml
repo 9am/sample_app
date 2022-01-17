@@ -14,11 +14,13 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
+            const fs = require('fs');
             const query = `query($owner:String!, $name:String!) {
               repository(owner:$owner, name:$name){
                 issues(first:100) {
                   nodes {
-                    id
+                    id,
+                    title
                   }
                 }
               }
@@ -28,4 +30,6 @@ jobs:
               name: context.repo.repo
             }
             const result = await github.graphql(query, variables)
-            console.log(result)
+            const output = JSON.stringify(result, null, 2);
+            console.log(output)
+            fs.writeFileSync('./data.json', output, 'utf8')
