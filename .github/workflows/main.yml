@@ -11,7 +11,8 @@ jobs:
   list-issues:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v5
+      - name: Fetch API
+        uses: actions/github-script@v5
         with:
           script: |
             const fs = require('fs');
@@ -33,3 +34,11 @@ jobs:
             const output = JSON.stringify(result, null, 2);
             console.log(output)
             fs.writeFileSync('./data.json', output, 'utf8')
+      - name: Use
+        uses: actions/checkout@v2
+      - name: Commit data file
+        run: |
+          git config --global user.name '9am'
+          git config --global user.email 'gbgogb@gmail.com'
+          git commit -am "Automated data"
+          git push
