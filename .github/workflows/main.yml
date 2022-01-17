@@ -25,7 +25,7 @@ jobs:
                     title,
                     publishedAt,
                     url,
-                    labels() {
+                    labels(first:10) {
                       nodes {
                         name
                       }
