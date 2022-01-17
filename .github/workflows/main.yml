@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Fetch API
         uses: actions/github-script@v5
+        id: set-result
         with:
           script: |
             const fs = require('fs');
@@ -33,11 +34,12 @@ jobs:
             const result = await github.graphql(query, variables)
             const output = JSON.stringify(result, null, 2);
             console.log(output)
-            fs.writeFileSync('./data.json', output, 'utf8')
+            return output
       - name: Use
         uses: actions/checkout@v2
       - name: Commit data file
         run: |
+          echo "${{steps.set-result.outputs.result}}" > ./data.json
           git config --global user.name '9am'
           git config --global user.email 'gbgogb@gmail.com'
           git commit -am "Automated data"
