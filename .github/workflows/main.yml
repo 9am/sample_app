@@ -23,8 +23,10 @@ jobs:
                   nodes {
                     id,
                     title,
+                    body,
                     publishedAt,
                     url,
+                    number,
                     labels(first:10) {
                       nodes {
                         name
@@ -39,7 +41,7 @@ jobs:
               name: context.repo.repo
             }
             const result = await github.graphql(query, variables)
-            const output = JSON.stringify(result, null, 2)
+            const output = JSON.stringify(result?.repository?.issues?.nodes, null, 2)
             console.log('output', output);
             return output
           result-encoding: string
