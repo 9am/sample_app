@@ -31,7 +31,7 @@ module.exports = async ({ github, context, core }) => {
         let hasNextPage = true;
         let after = null;
         while (hasNextPage) {
-            const test =  = github.graphql(
+            const test = github.graphql(
                 console.log(test);
             const issues = test.repository.issues;
             // const { repository: { issues } } = github.graphql(
