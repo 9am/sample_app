@@ -35,7 +35,6 @@ jobs:
           script: |
             const script = require('./_actions/pagination.js');
             const data = script({ github, context, core });
-            console.log('data', data);
             return data;
       - name: Push data
         run: |
