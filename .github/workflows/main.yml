@@ -13,20 +13,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Fetch data
+      - name: Fetch
         uses: actions/github-script@v5
-        id: set-result
+        id: fetch
         with:
           script: |
-            const script = require('./_actions/fetchData.js');
+            const script = require('./_actions/fetch.js');
             const data = await script({ github, context, core });
             return data;
-          result-encoding: string
+      - name: Pagination
+        id: pagination
+        env:
+          DATA: ${{ steps.fetch.outputs.result }}
+        with:
+          script: |
+            const script = require('./_actions/pagination.js');
+            const data = script({ github, context, core });
+            console.log('data', data);
+            return data;
       - name: Push data
         run: |
-          echo '${{steps.set-result.outputs.result}}' > ./docs/data.json
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add ./docs/data.json
-          git commit -m "automated data"
-          git push
+          echo '${{steps.pagination.outputs.result}}'
+          # echo '${{steps.pagination.outputs.result}}' > ./docs/test.json
+          # git config user.name github-actions
+          # git config user.email github-actions@github.com
+          # git add ./docs/data.json
+          # git commit -m "automated data"
+          # git push

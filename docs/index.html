@@ -17,6 +17,76 @@
     </button>
     <main>
     </main>
+    <script type="module">
+        // import { graphql } from "https://cdn.skypack.dev/@octokit/graphql";
+        // const fetchAll = async () => {
+        //     let output = [];
+        //     let hasNextPage = true;
+        //     let after = null;
+        //     while (hasNextPage) {
+        //         const { repository: { issues } } = await graphql({
+        //           query: `query lastIssues($owner: String!, $repo: String!, $num: Int = 100, $after: String) {
+        //             repository(owner:$owner, name:$repo) {
+        //               issues(first:$num, after:$after, orderBy:{field:CREATED_AT, direction:DESC}, filterBy:{createdBy:$owner}) {
+        //                 pageInfo {
+        //                     hasNextPage,
+        //                     endCursor
+        //                 }
+        //                 nodes {
+        //                   id,
+        //                   title
+        //                 }
+        //               }
+        //             }
+        //           }`,
+        //           owner: "9am",
+        //           repo: "sample_app",
+        //           after,
+        //           headers: {
+        //             authorization: `token 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`,
+        //           },
+        //         });
+        //         hasNextPage = issues.pageInfo.hasNextPage;
+        //         after = issues.pageInfo.endCursor;
+        //         output = [...output, ...issues.nodes];
+        //     }
+        //     return output;
+        // };
+
+        // const list = await fetchAll();
+        // console.log('all', list);
+
+        const input = Array.from({ length: 5 }).map((_, i) => ({ id: i })).reverse();
+
+        const paginate = (input = [], size = 2) => {
+            const list = [...input];
+            const totalCount = list.length;
+            return Array
+                .from({ length: Math.ceil(list.length / size) })
+                .map((_, i) => i)
+                .reduce(
+                    (memo, pageNum) => {
+                        const nodes = list.splice(0, size);
+                        const [next = {}] = list;
+                        return [
+                            ...memo,
+                            {
+                                nodes,
+                                totalCount,
+                                pageInfo: {
+                                    hasNextPage: !!next.id,
+                                    endCursor: next.id,
+                                },
+                            }
+                        ];
+                    },
+                    [],
+                );
+        };
+        const list = paginate(input, 4);
+        console.log(input, list);
+    </script>
+    <!--
     <script type="module" src="./js/imgVictor.js"></script>
     <script type="module">
         const loadMore = ({
@@ -71,5 +141,6 @@
             });
         })();
     </script>
+    -->
 </body>
 </html>
