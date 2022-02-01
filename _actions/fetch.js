@@ -1,6 +1,6 @@
 module.exports = async ({ github, context, core }) => {
     const query = `query lastIssues($owner: String!, $repo: String!, $num: Int = 100, $after: String) {
-      repository(owner:$owner, name:$name){
+      repository(owner:$owner, name:$repo){
         issues(first:$num, after:$after, orderBy:{field:CREATED_AT, direction:DESC}, filterBy:{createdBy:$owner}) {
           pageInfo {
             hasNextPage,
