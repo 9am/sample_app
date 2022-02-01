@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  list-issues:
+  update-issues:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

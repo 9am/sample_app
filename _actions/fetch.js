@@ -31,14 +31,10 @@ module.exports = async ({ github, context, core }) => {
         let hasNextPage = true;
         let after = null;
         while (hasNextPage) {
-            const test = github.graphql(
-            // const { repository: { issues } } = github.graphql(
+            const { repository: { issues } } = await github.graphql(
                 query,
                 {...variables, after},
             );
-                console.log(test);
-hasNextPage = false;
-            const issues = test.repository.issues;
             hasNextPage = issues.pageInfo.hasNextPage;
             after = issues.pageInfo.endCursor;
             output = [...output, ...issues.nodes];
