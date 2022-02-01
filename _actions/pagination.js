@@ -1,4 +1,4 @@
-module.exports = ({ github, context, core, pageSize }) => {
+module.exports = ({ github, context, core }) => {
     const paginate = (input = [], size = 10) => {
         const list = [...input];
         const totalCount = list.length;
@@ -26,6 +26,7 @@ module.exports = ({ github, context, core, pageSize }) => {
     };
     const list = JSON.parse(process.env.DATA);
     const { pageSize } = context.payload.inputs;
+    core.info(steps.fetch.outputs.result);
     core.info(`pagination start: ${list.length}, ${pageSize}`);
     const pages = paginate(list, pageSize);
     core.info(`pagination end: ${pages.length}`);
