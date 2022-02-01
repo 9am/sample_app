@@ -31,7 +31,10 @@ module.exports = async ({ github, context, core }) => {
         let hasNextPage = true;
         let after = null;
         while (hasNextPage) {
-            const { repository: { issues } } = github.graphql(
+            const test =  = github.graphql(
+                console.log(test);
+            const issues = test.repository.issues;
+            // const { repository: { issues } } = github.graphql(
                 query,
                 {...variables, after},
             );
