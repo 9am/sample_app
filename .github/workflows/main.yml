@@ -33,9 +33,8 @@ jobs:
           DATA: ${{ steps.fetch.outputs.result }}
         with:
           script: |
-            const pageSize = context.payload.inputs.dummy;
             const script = require('./_actions/pagination.js');
-            const data = script({ github, context, core, pageSize });
+            const data = script({ github, context, core });
             console.log('data', data);
             return data;
       - name: Push data
