@@ -22,6 +22,7 @@ jobs:
             const data = await script({ github, context, core });
             return data;
       - name: Pagination
+        uses: actions/github-script@v5
         id: pagination
         env:
           DATA: ${{ steps.fetch.outputs.result }}
