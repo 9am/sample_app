@@ -42,8 +42,8 @@ module.exports = async ({ github, context, core }) => {
         return output;
     };
 
-    core.info('fetching start');
+    core.info('fetching start:');
     const list = await fetchAll();
-    core.info('fetching end: ${list.length}');
+    core.info(`fetching end: ${list.length}`);
     return list;
 }

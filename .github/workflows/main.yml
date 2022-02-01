@@ -6,6 +6,11 @@ name: TEST
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      pageSize:
+        description: 'Page size'
+        required: true
+        default: 10
 
 jobs:
   update-issues:
