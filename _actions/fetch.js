@@ -26,6 +26,10 @@ module.exports = async ({ github, context, core }) => {
         repo: context.repo.repo,
         num: 100,
     }
+    const stripBody = (nodes = []) => nodes.map(item => {
+        ...item,
+        body: body.replace(/[\r\n]/g, ''),
+    });
     const fetchAll = async () => {
         let output = [];
         let hasNextPage = true;
@@ -37,7 +41,7 @@ module.exports = async ({ github, context, core }) => {
             );
             hasNextPage = issues.pageInfo.hasNextPage;
             after = issues.pageInfo.endCursor;
-            output = [...output, ...issues.nodes];
+            output = [...output, ...stripBody(issues.nodes)];
         }
         return output;
     };
