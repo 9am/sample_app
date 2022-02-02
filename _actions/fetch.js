@@ -26,10 +26,10 @@ module.exports = async ({ github, context, core }) => {
         repo: context.repo.repo,
         num: 100,
     }
-    const stripBody = (nodes = []) => nodes.map(item => {
+    const stripBody = (nodes = []) => nodes.map(item => ({
         ...item,
         body: body.replace(/[\r\n]/g, ''),
-    });
+    }));
     const fetchAll = async () => {
         let output = [];
         let hasNextPage = true;
