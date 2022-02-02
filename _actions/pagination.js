@@ -17,6 +17,7 @@ module.exports = ({ github, context, core }) => {
                             pageInfo: {
                                 hasNextPage: !!next.id,
                                 endCursor: next.id,
+                                nextPage: pageNum + 1,
                             },
                         }
                     ];
