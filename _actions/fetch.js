@@ -28,7 +28,7 @@ module.exports = async ({ github, context, core }) => {
     }
     const stripBody = (nodes = []) => nodes.map(item => ({
         ...item,
-        body: body.replace(/[\r\n]/g, ''),
+        body: item.body.replace(/[\r\n]/g, ''),
     }));
     const fetchAll = async () => {
         let output = [];
