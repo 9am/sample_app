@@ -8,29 +8,29 @@
     <title>test api</title>
     <style>
         *, *::before, *::after {
-          box-sizing: border-box;
+            box-sizing: border-box;
         }
         * {
-          margin: 0;
+            margin: 0;
         }
         html, body {
-          height: 100%;
+            height: 100%;
         }
         body {
             background-color: #EFEEEE;
             // background-color: whitesmoke;
-          line-height: 1.5;
-          -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
         img, video, canvas, svg {
-          display: block;
-          max-width: 100%;
+            display: block;
+            max-width: 100%;
         }
         input, button, textarea, select {
-          font: inherit;
+            font: inherit;
         }
         p, h1, h2, h3, h4, h5, h6 {
-          overflow-wrap: break-word;
+            overflow-wrap: break-word;
         }
     </style>
     <style>
@@ -52,12 +52,12 @@
             display: flex;
             flex-wrap: wrap;
             color: #24292f;
+            padding: 24px;
         }
         .item {
             display: flex;
             flex-direction: column;
             flex: 0 0 50%;
-            padding: 24px;
         }
         .item .victor {
             flex: 2 0;
@@ -101,7 +101,7 @@
     </style>
 </head>
 <body>
-    <main>
+    <main id="main">
         <button id="more">
             test
         </button>
@@ -189,7 +189,11 @@
         };
 
         const pending = (status = false) => {
-            moreBtn.setAttribute('disabled', status);
+            if (status) {
+                moreBtn.setAttribute('disabled', '');
+            } else {
+                moreBtn.removeAttribute('disabled');
+            }
         };
 
         const addItems = (child) => {
@@ -200,31 +204,35 @@
         const renderIssue = ({
             href,
             src,
-            id,
             title,
+            desc,
             publishedAt,
             labels,
+            next,
         }) => `
-            <section id=${id} class="item">
+            <section class="item" data-next="${next}">
                 <a href="${href}" target="_blank">
                     <img-victor class="victor" src="${src}"></img-victor>
                 </a>
                 <div class="info">
                     <h2 class="title">${title}</h2>
+                    <p class="desc">${desc}</p>
                     <p class="date">${new Date(publishedAt).toDateString()}</p>
-                    <div>${renderLables(labels)}</div>
+                    <div>${renderLabels(labels)}</div>
                 </div>
             </section>
         `;
-        const renderLables = ({ nodes }) => nodes.map(({ name }) => `
+        const renderLabels = ({ nodes }) => nodes.map(({ name }) => `
             <a href="${BASE}/labels/${name}" target="_blank">${name}</a>
         `).join('');
 
         const createItem = ({ body, number, ...rest }) => {
-            const file = body.match(/^(.+)\/([^\/\)]+)\)/)[2];
+            const file = body.match(/<img src=.*\/([^\/]+\.\w{3,4})/)[1];
+            const desc = body.match(/<mark>(.*)<\/mark>/)[1];
             template.innerHTML = renderIssue({
                 href: `${BASE}/issues/${number}`,
                 src: `${IMG_PROXY}/${file}`,
+                desc,
                 ...rest,
             });
             return template.content.cloneNode(true);
@@ -237,7 +245,7 @@
                 nodes = [],
                 pageInfo = {},
                 totalCount = 0,
-            } = await fetch(`/data/${page}.json`).then(res => res.json());
+            } = await fetch(`/data/${page}.json?rid=${Math.random()}`).then(res => res.json());
             const ele = nodes.reduce((container, data) => {
                 container.appendChild(createItem({ ...data, next: pageInfo.nextPage }));
                 return container;
