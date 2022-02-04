@@ -52,12 +52,12 @@
             display: flex;
             flex-wrap: wrap;
             color: #24292f;
-            padding: 24px;
         }
         .item {
             display: flex;
             flex-direction: column;
             flex: 0 0 50%;
+            padding: 24px;
         }
         .item .victor {
             flex: 2 0;
@@ -176,7 +176,7 @@
         // console.log(input, list);
     </script>
     <script type="module">
-        import { ImageVictor } from '/js/imgVictor/index.js';
+        import { ImageVictor } from './assets/js/imgVictor/index.js';
 
         const BASE = 'https://github.com/9am/sample_app';
         const IMG_PROXY = 'https://ik.imagekit.io/94av7hg7apo';
@@ -245,7 +245,7 @@
                 nodes = [],
                 pageInfo = {},
                 totalCount = 0,
-            } = await fetch(`/data/${page}.json?rid=${Math.random()}`).then(res => res.json());
+            } = await fetch(`./assets/data/${page}.json?rid=${Math.random()}`).then(res => res.json());
             const ele = nodes.reduce((container, data) => {
                 container.appendChild(createItem({ ...data, next: pageInfo.nextPage }));
                 return container;

@@ -1,6 +1,6 @@
 import Pool from './pool.js';
 const pool = new Pool({
-    url: '/js/imgVictor/workers/lsd/lsd.js',
+    url: './assets/js/imgVictor/workers/lsd/lsd.js',
     size: window.navigator.hardwareConcurrency && window.navigator.hardwareConcurrency > 1
         ? 2
         : 1,
