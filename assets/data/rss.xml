@@ -1,4 +1,3 @@
-
 <?xml version="1.0"?>
 <rss version="2.0">
     <channel>
@@ -11,9 +10,8 @@
             <link>http://9am.github.io/sample_app/</link>
         </image>
         <language>en-us</language>
-        <lastBuildDate>Sun, 06 Feb 2022 03:43:18 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 06 Feb 2022 03:50:16 GMT</lastBuildDate>
         <managingEditor>gbgogb@gmail.com</managingEditor>
-        
         <item>
             <title>test5</title>
             <link>https://github.com/9am/sample_app/issues/7</link>
@@ -23,8 +21,6 @@
             <guid>I_kwDOAMKUeM5ClNka</guid>
             <enclosure url="https://user-images.githubusercontent.com/1435457/149496057-e31ec183-64d5-408d-99ab-5617feefdf11.jpeg" />
         </item>
-    
-
         <item>
             <title>test4</title>
             <link>https://github.com/9am/sample_app/issues/6</link>
@@ -34,18 +30,5 @@
             <guid>I_kwDOAMKUeM5ClNjC</guid>
             <enclosure url="https://user-images.githubusercontent.com/1435457/149496057-e31ec183-64d5-408d-99ab-5617feefdf11.jpeg" />
         </item>
-    
-
-        <item>
-            <title>test3</title>
-            <link>https://github.com/9am/sample_app/issues/5</link>
-            <description> oaiwejf erougaoiewjf</description>
-            <author>gbgogb@gmail.com</author>
-            <pubDate>Fri, 14 Jan 2022 09:55:16 GMT</pubDate>
-            <guid>I_kwDOAMKUeM5BxDpg</guid>
-            <enclosure url="https://user-images.githubusercontent.com/1435457/149496057-e31ec183-64d5-408d-99ab-5617feefdf11.jpeg" />
-        </item>
-    
     </channel>
 </rss>
-
