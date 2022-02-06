@@ -10,7 +10,7 @@
             <link>http://9am.github.io/sample_app/</link>
         </image>
         <language>en-us</language>
-        <lastBuildDate>Sun, 06 Feb 2022 05:22:12 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 06 Feb 2022 05:28:55 GMT</lastBuildDate>
         <managingEditor>test@gmail.com</managingEditor>
         <item>
             <title>test6</title>
@@ -28,6 +28,15 @@
             <author>test@gmail.com</author>
             <pubDate>Fri, 28 Jan 2022 06:33:28 GMT</pubDate>
             <guid>I_kwDOAMKUeM5ClNka</guid>
+            <enclosure url="https://user-images.githubusercontent.com/1435457/149496057-e31ec183-64d5-408d-99ab-5617feefdf11.jpeg" />
+        </item>
+        <item>
+            <title>test4</title>
+            <link>https://github.com/9am/sample_app/issues/6</link>
+            <description> oaiwejf erougaoiewjf</description>
+            <author>test@gmail.com</author>
+            <pubDate>Fri, 28 Jan 2022 06:33:18 GMT</pubDate>
+            <guid>I_kwDOAMKUeM5ClNjC</guid>
             <enclosure url="https://user-images.githubusercontent.com/1435457/149496057-e31ec183-64d5-408d-99ab-5617feefdf11.jpeg" />
         </item>
     </channel>
