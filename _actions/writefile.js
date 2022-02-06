@@ -7,8 +7,7 @@ const EMAIL = 'gbgogb@gmail.com';
 const rss = ({
     lastBuildDate = new Date().toUTCString(),
     items = '',
-}) => `
-<?xml version="1.0"?>
+}) => `<?xml version="1.0"?>
 <rss version="2.0">
     <channel>
         <title>The 9am Blog</title>
@@ -21,11 +20,9 @@ const rss = ({
         </image>
         <language>en-us</language>
         <lastBuildDate>${lastBuildDate}</lastBuildDate>
-        <managingEditor>${EMAIL}</managingEditor>
-        ${items}
+        <managingEditor>${EMAIL}</managingEditor>${items}
     </channel>
-</rss>
-`;
+</rss>`;
 
 const item = ({
     id,
@@ -46,12 +43,11 @@ const item = ({
             <pubDate>${new Date(publishedAt).toUTCString()}</pubDate>
             <guid>${id}</guid>
             <enclosure url="${img}" />
-        </item>
-    `;
+        </item>`;
 };
 
 const writeRSS = async ({ nodes = [] }) => {
-    const items = nodes.map(node => item(node)).join('\n');
+    const items = nodes.map(node => item(node)).join('');
     const output = rss({ items });
     return exec(`echo '${output}' > ./assets/data/rss.xml`);
 };
