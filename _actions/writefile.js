@@ -64,8 +64,8 @@ module.exports = async ({ github, context, core }) => {
     await Promise.all(pages.map(
         (page, index) => exec(`echo '${JSON.stringify(page, null, 2)}' > ./assets/data/${index}.json`)),
     );
-    if (page.length) {
-        await writeRSS(page[0]);
+    if (pages.length) {
+        await writeRSS(pages[0]);
     }
     core.info(`write end: ${pages.length}`);
 }
