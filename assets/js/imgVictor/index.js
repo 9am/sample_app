@@ -16,6 +16,7 @@ template.innerHTML = `
             overflow: hidden;
         }
         path {
+            fill: var(--victor-fill, none);
             stroke: var(--victor-stroke, grey);
             stroke-width: var(--victor-stroke-width, 2);
             stroke-linecap: var(--victor-stroke-linecap, round);

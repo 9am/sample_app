@@ -34,7 +34,7 @@
         }
     </style>
     <style>
-        a {
+        .link {
             cursor: pointer;
             // line-height: 2em;
             text-decoration: none;
@@ -44,9 +44,13 @@
             box-shadow: 6px 6px 16px rgb(217, 210, 200, 0.52),
                         -6px -6px 16px rgb(255, 255, 255, 0.84);
         }
-        a:active:hover {
+        .link:active:hover {
             box-shadow: inset 6px 6px 16px rgb(217, 210, 200, 0.52),
                         inset -6px -6px 16px rgb(255, 255, 255, 0.84);
+        }
+        header {
+            background: black;
+            color: white;
         }
         main {
             display: flex;
@@ -59,13 +63,13 @@
             flex: 0 0 50%;
             padding: 24px;
         }
-        .item .victor {
+        .item > .link {
             flex: 2 0;
         }
-        .item .info {
+        .item > .info {
             flex: 1 1;
         }
-        .item img-victor {
+        .item .victor {
             height: 100%;
             display: flex;
             align-items: center;
@@ -101,11 +105,21 @@
     </style>
 </head>
 <body>
+    <header>
+        <h1>
+            9am Blog
+        </h1>
+    </header>
     <main id="main">
-        <button id="more">
-            test
-        </button>
+        <section class="item">
+            <button id="more" class="link">
+                more
+            </button>
+            <div class="info"></div>
+        </section>
     </main>
+    <footer>
+    </footer>
     <script type="module">
         // import { graphql } from "https://cdn.skypack.dev/@octokit/graphql";
         // const fetchAll = async () => {
@@ -184,7 +198,8 @@
         const moreBtn = document.querySelector('#more');
 
         const getNextPage = () => {
-            const [lastItem] = [...document.querySelectorAll('.item')].slice(-1);
+            const [lastItem] = [...document.querySelectorAll('.item')].slice(-2, -1);
+            console.log(lastItem);
             return lastItem ? lastItem.dataset.next : 0;
         };
 
@@ -197,7 +212,7 @@
         };
 
         const addItems = (child) => {
-            main.insertBefore(child, moreBtn);
+            main.insertBefore(child, moreBtn.parentNode);
         };
 
         const template = document.createElement('template');
@@ -211,19 +226,19 @@
             next,
         }) => `
             <section class="item" data-next="${next}">
-                <a href="${href}" target="_blank">
+                <a class="link" href="${href}" target="_blank">
                     <img-victor class="victor" src="${src}"></img-victor>
                 </a>
                 <div class="info">
                     <h2 class="title">${title}</h2>
+                    <time class="date" datetime="${publishedAt}">${new Date(publishedAt).toDateString()}</time>
                     <p class="desc">${desc}</p>
-                    <p class="date">${new Date(publishedAt).toDateString()}</p>
                     <div>${renderLabels(labels)}</div>
                 </div>
             </section>
         `;
         const renderLabels = ({ nodes }) => nodes.map(({ name }) => `
-            <a href="${BASE}/labels/${name}" target="_blank">${name}</a>
+            <a class="link" href="${BASE}/labels/${name}" target="_blank">${name}</a>
         `).join('');
 
         const createItem = ({ body, number, ...rest }) => {
