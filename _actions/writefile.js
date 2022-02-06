@@ -53,7 +53,7 @@ const item = ({
 const writeRSS = async ({ nodes = [] }) => {
     const items = nodes.map(node => item(node)).join('\n');
     const output = rss({ items });
-    return exec(`echo '${output}' > ./assets/data/rss.xml`)));
+    return exec(`echo '${output}' > ./assets/data/rss.xml`);
 };
 
 module.exports = async ({ github, context, core }) => {
@@ -61,7 +61,9 @@ module.exports = async ({ github, context, core }) => {
     core.info(`write start: ${pages.length}`);
     await exec('rm -rf ./assets/data');
     await exec('mkdir ./assets/data');
-    await Promise.all(pages.map((page, index) => exec(`echo '${JSON.stringify(page, null, 2)}' > ./assets/data/${index}.json`)));
+    await Promise.all(pages.map(
+        (page, index) => exec(`echo '${JSON.stringify(page, null, 2)}' > ./assets/data/${index}.json`)),
+    );
     if (page.length) {
         await writeRSS(page[0]);
     }
