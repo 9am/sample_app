@@ -1,10 +1,6 @@
-# This is a basic workflow to help you get started with Actions
+name: PUBLISH
 
-name: TEST
-
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
       pageSize:
@@ -13,11 +9,13 @@ on:
         default: 10
 
 jobs:
-  update-issues:
+  update-data:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: pages
       - name: Fetch
         uses: actions/github-script@v5
         id: fetch
@@ -48,6 +46,6 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add ./docs/data
-          git commit -m "update data"
+          git add ./assets/data
+          git commit -m "update data by action"
           git push
