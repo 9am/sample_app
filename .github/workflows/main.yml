@@ -14,12 +14,11 @@ on:
 
 jobs:
   update-data:
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          ref: main
       - name: Fetch
         uses: actions/github-script@v5
         id: fetch
