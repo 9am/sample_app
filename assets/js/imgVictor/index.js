@@ -16,7 +16,6 @@ template.innerHTML = `
             overflow: hidden;
         }
         path {
-            fill: var(--victor-fill, none);
             stroke: var(--victor-stroke, grey);
             stroke-width: var(--victor-stroke-width, 2);
             stroke-linecap: var(--victor-stroke-linecap, round);
@@ -97,6 +96,9 @@ export class ImageVictor extends HTMLElement {
         }
         switch (name) {
             case 'src':
+                if (!this.src) {
+                    return;
+                }
                 try {
                     this._$loading.className = 'loading';
                     this._img = await ImageVictor.loadImage(this.src);
@@ -128,9 +130,7 @@ export class ImageVictor extends HTMLElement {
         );
         this._$path.setAttribute('d', this._dList.join(''));
         this._$svg.setAttribute('viewBox', `0 0 ${this._img.width} ${this._img.height}`);
-        if (!this.noDraw) {
-            this.draw();
-        }
+        this.draw();
     }
 
     draw() {
@@ -170,20 +170,9 @@ export class ImageVictor extends HTMLElement {
         this.setAttribute('title', val);
     }
 
-    get noDraw() {
-        return Boolean(this.getAttribute('no-draw'));
-    }
-
-    set noDraw(val) {
-        this.setAttribute('no-draw', Boolean(val));
-    }
-
     connectedCallback() {
         if (!this.hasAttribute('src')) {
             this.setAttribute('src', '');
-        }
-        if (!this.hasAttribute('no-draw')) {
-            this.setAttribute('no-draw', 'false');
         }
     }
 

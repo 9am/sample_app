@@ -17,8 +17,6 @@
             height: 100%;
         }
         body {
-            background-color: #EFEEEE;
-            // background-color: whitesmoke;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
@@ -34,28 +32,66 @@
         }
     </style>
     <style>
-        .link {
+        #skip-to-main {
+            position: absolute;
+            top: -100%;
+            background-color: black;
+            color: white;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        #skip-to-main:focus {
+            top: 0;
+        }
+        .button {
             cursor: pointer;
-            // line-height: 2em;
             text-decoration: none;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            background: #EFEEEE;
+            background-color: #EFEEEE;
             box-shadow: 6px 6px 16px rgb(217, 210, 200, 0.52),
                         -6px -6px 16px rgb(255, 255, 255, 0.84);
         }
-        .link:active:hover {
+        .button:active:hover {
             box-shadow: inset 6px 6px 16px rgb(217, 210, 200, 0.52),
                         inset -6px -6px 16px rgb(255, 255, 255, 0.84);
         }
-        header {
-            background: black;
-            color: white;
+        .link {
+            padding: 8px 16px;
+            color: #24292f;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: 'Helvetica Neue',
+               'Arial Nova',
+                Helvetica,
+                Arial,
+                sans-serif;
+            background-color: #EFEEEE;
+            color: #24292f;
+        }
+        header, footer {
+            flex: 0 0 auto;
+            position: relative;
+            height: 200px;
+            background-color: whitesmoke;
+            text-align: center;
         }
         main {
+            flex: 1 0 auto;
             display: flex;
             flex-wrap: wrap;
-            color: #24292f;
+        }
+        footer {
+            margin-top: auto;
+        }
+        .logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         .item {
             display: flex;
@@ -63,11 +99,28 @@
             flex: 0 0 50%;
             padding: 24px;
         }
-        .item > .link {
+        .item > .button {
             flex: 2 0;
         }
         .item > .info {
             flex: 1 1;
+            margin: 8px 0 0 0;
+            position: relative;
+        }
+        .info::after {
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            content: '';
+            background-color: #EFEEEE;
+            box-shadow: inset 1px 1px 2px rgb(217, 210, 200, 0.52),
+                        inset -1px -1px 2px rgb(255, 255, 255, 0.84);
+        }
+        .item:last-child .info::after {
+            visibility: hidden;
         }
         .item .victor {
             height: 100%;
@@ -95,100 +148,41 @@
                 flex: 0 0 100%;
                 flex-direction: row;
             }
+            .item > .info {
+                margin: 0 0 0 24px;
+            }
         }
         @media screen and (max-width: 600px) {
             .item {
                 flex: 0 0 100%;
                 flex-direction: column;
             }
+            .item > .info {
+                margin: 8px 0 0 0;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>
-            9am Blog
+    <header id="top">
+        <a id="skip-to-main" href="#main">Skip to main content</a>
+        <h1 class="logo">
+            9am
         </h1>
     </header>
     <main id="main">
-        <section class="item">
-            <button id="more" class="link">
-                more
+        <article class="item">
+            <button id="more" class="button">
+                MORE
             </button>
             <div class="info"></div>
-        </section>
+        </article>
     </main>
     <footer>
+        <a class="button link" href="mailto:test@gmail.com">Email</a>
+        <a class="button link" href="./assets/data/rss.xml">RSS</a>
+        <a class="button link" href="#top">TOP</a>
     </footer>
-    <script type="module">
-        // import { graphql } from "https://cdn.skypack.dev/@octokit/graphql";
-        // const fetchAll = async () => {
-        //     let output = [];
-        //     let hasNextPage = true;
-        //     let after = null;
-        //     while (hasNextPage) {
-        //         const { repository: { issues } } = await graphql({
-        //           query: `query lastIssues($owner: String!, $repo: String!, $num: Int = 100, $after: String) {
-        //             repository(owner:$owner, name:$repo) {
-        //               issues(first:$num, after:$after, orderBy:{field:CREATED_AT, direction:DESC}, filterBy:{createdBy:$owner}) {
-        //                 pageInfo {
-        //                     hasNextPage,
-        //                     endCursor
-        //                 }
-        //                 nodes {
-        //                   id,
-        //                   title
-        //                 }
-        //               }
-        //             }
-        //           }`,
-        //           owner: "9am",
-        //           repo: "sample_app",
-        //           after,
-        //           headers: {
-        //             authorization: `token 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`,
-        //           },
-        //         });
-        //         hasNextPage = issues.pageInfo.hasNextPage;
-        //         after = issues.pageInfo.endCursor;
-        //         output = [...output, ...issues.nodes];
-        //     }
-        //     return output;
-        // };
-
-        // const list = await fetchAll();
-        // console.log('all', list);
-
-        // const input = Array.from({ length: 5 }).map((_, i) => ({ id: i })).reverse();
-
-        // const paginate = (input = [], size = 2) => {
-        //     const list = [...input];
-        //     const totalCount = list.length;
-        //     return Array
-        //         .from({ length: Math.ceil(list.length / size) })
-        //         .map((_, i) => i)
-        //         .reduce(
-        //             (memo, pageNum) => {
-        //                 const nodes = list.splice(0, size);
-        //                 const [next = {}] = list;
-        //                 return [
-        //                     ...memo,
-        //                     {
-        //                         nodes,
-        //                         totalCount,
-        //                         pageInfo: {
-        //                             hasNextPage: !!next.id,
-        //                             endCursor: next.id,
-        //                         },
-        //                     }
-        //                 ];
-        //             },
-        //             [],
-        //         );
-        // };
-        // const list = paginate(input, 4);
-        // console.log(input, list);
-    </script>
     <script type="module">
         import { ImageVictor } from './assets/js/imgVictor/index.js';
 
@@ -205,8 +199,10 @@
 
         const pending = (status = false) => {
             if (status) {
+                moreBtn.textContent = '......';
                 moreBtn.setAttribute('disabled', '');
             } else {
+                moreBtn.textContent = 'MORE';
                 moreBtn.removeAttribute('disabled');
             }
         };
@@ -225,20 +221,20 @@
             labels,
             next,
         }) => `
-            <section class="item" data-next="${next}">
-                <a class="link" href="${href}" target="_blank">
-                    <img-victor class="victor" src="${src}"></img-victor>
+            <article class="item" data-next="${next}">
+                <a class="button" href="${href}" target="_blank">
+                    <img-victor class="victor" data-src="${src}"></img-victor>
                 </a>
-                <div class="info">
+                <section class="info">
                     <h2 class="title">${title}</h2>
                     <time class="date" datetime="${publishedAt}">${new Date(publishedAt).toDateString()}</time>
                     <p class="desc">${desc}</p>
                     <div>${renderLabels(labels)}</div>
-                </div>
-            </section>
+                </section>
+            </article>
         `;
         const renderLabels = ({ nodes }) => nodes.map(({ name }) => `
-            <a class="link" href="${BASE}/labels/${name}" target="_blank">${name}</a>
+            <a class="button" href="${BASE}/labels/${name}" target="_blank">${name}</a>
         `).join('');
 
         const createItem = ({ body, number, ...rest }) => {
@@ -269,15 +265,50 @@
             if (pageInfo.hasNextPage) {
                 pending(false);
             }
+            active();
         };
 
+        const inViewport = (el, percent = 0.2) => {
+            if (!el) {
+                return false;
+            }
+            const { top, height } = el.getBoundingClientRect();
+            return (top >= 0
+                && (top + height * percent) <= (window.innerHeight || document.documentElement.clientHeight)
+            );
+        };
 
+        const active = () => {
+            const victors = [...document.querySelectorAll('.victor[data-src]')];
+            victors.forEach(victor => {
+                if (inViewport(victor)) {
+                    victor.src = victor.dataset.src;
+                    delete victor.dataset.src;
+                }
+            });
+        };
+
+        const throttle = (fn, delay = 500) => {
+            let timer = null;
+            return (...args) => {
+                if (timer) {
+                    return;
+                }
+                timer = setTimeout(() => {
+                    fn(args);
+                    timer = null;
+                }, delay);
+            };
+        };
+
+        const onActive = throttle(active);
+        moreBtn.addEventListener('click', loadMore);
+        window.addEventListener('scroll', onActive);
+        window.addEventListener('resize', onActive);
         try {
-            const moreBtn = document.querySelector('#more');
-            moreBtn.addEventListener('click', async () => await loadMore());
             await loadMore();
         } catch (err) {
-            console.log('fail to load:', err);
+            console.log('fail:', err);
         }
     </script>
     <!--
