@@ -44,6 +44,11 @@
         #skip-to-main:focus {
             top: 0;
         }
+        .protruding {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 6px 6px 16px rgb(217, 210, 200, 0.52),
+                        -6px -6px 16px rgb(255, 255, 255, 0.84);
+        }
         .button {
             cursor: pointer;
             text-decoration: none;
@@ -56,6 +61,14 @@
         .button:active:hover {
             box-shadow: inset 6px 6px 16px rgb(217, 210, 200, 0.52),
                         inset -6px -6px 16px rgb(255, 255, 255, 0.84);
+        }
+        .button svg {
+            fill: dimgrey;
+            stroke: none;
+        }
+        .button:active:hover svg {
+            fill: none;
+            stroke: dimgrey;
         }
         .link {
             padding: 8px 16px;
@@ -96,6 +109,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            font-size: larger;
         }
         .item {
             display: flex;
@@ -131,6 +145,31 @@
             display: flex;
             align-items: center;
             padding: 4px;
+            --victor-stroke: dimgrey;
+        }
+        .button > * {
+            vertical-align: sub;
+        }
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+        }
+        footer .button-group{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            width: 100%;
+        }
+        .button-group .button {
+            margin: 0 8px 8px 8px;
+        }
+        .button-group .button:last-child {
+            margin-left: auto;
+        }
+        .button-group em {
+            display: none;
         }
         @media (prefers-color-scheme: dark) {
             html {
@@ -168,9 +207,9 @@
     </style>
 </head>
 <body>
-    <header id="top">
-        <shape-tile class="tile" edge="" title="9am"></shape-tile>
+    <header id="top" class="protruding">
         <a id="skip-to-main" href="#main">Skip to main content</a>
+        <shape-tile class="tile" title="9am"></shape-tile>
         <h1 class="logo">
             9am
         </h1>
@@ -180,14 +219,38 @@
             <button id="more" class="button">
                 MORE
             </button>
-            <div class="info"></div>
+            <section class="info"></section>
         </article>
     </main>
-    <footer>
-        <shape-tile class="tile" edge="10"></shape-tile>
-        <a class="button link" href="mailto:test@gmail.com">Email</a>
-        <a class="button link" href="./assets/data/rss.xml">RSS</a>
-        <a class="button link" href="#top">TOP</a>
+    <footer class="protruding">
+        <shape-tile class="tile"></shape-tile>
+        <div class="button-group">
+            <a class="button link" href="mailto:test@gmail.com">
+                <svg class="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"></path>
+                </svg>
+                <em>email</em>
+            </a>
+            <a class="button link" href="https://github.com/9am/sample_app/issues">
+                <svg class="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3"></path>
+                </svg>
+                <em>github</em>
+            </a>
+            <a class="button link" href="./assets/data/rss.xml">
+                <svg class="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="6.18" cy="17.82" r="2.18"></circle>
+                    <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path>
+                </svg>
+                <em>rss</em>
+            </a>
+            <a class="button link" href="#top">
+                <svg class="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z"></path>
+                </svg>
+                <em>top</em>
+            </a>
+        </div>
     </footer>
     <script type="module">
         import { ImageVictor } from './assets/js/imgVictor/index.js';
@@ -200,7 +263,6 @@
 
         const getNextPage = () => {
             const [lastItem] = [...document.querySelectorAll('.item')].slice(-2, -1);
-            console.log(lastItem);
             return lastItem ? lastItem.dataset.next : 0;
         };
 
@@ -308,17 +370,21 @@
             };
         };
 
-        const onActive = throttle(active);
-        moreBtn.addEventListener('click', loadMore);
-        window.addEventListener('scroll', onActive);
-        window.addEventListener('resize', onActive);
-        try {
-            // await loadMore();
-        } catch (err) {
-            console.log('fail:', err);
-        }
+        (async () => {
+            const onActive = throttle(active);
+            moreBtn.addEventListener('click', loadMore);
+            window.addEventListener('scroll', onActive);
+            window.addEventListener('resize', onActive);
+            try {
+                // await loadMore();
+            } catch (err) {
+                console.log('fail:', err);
+            }
+            [...document.querySelectorAll('.tile')].forEach(tile => {
+                const edge = Math.floor(Math.random() * 12 + 3);
+                tile.edge = edge > 9 ? 0 : edge;
+            });
+        })();
     </script>
-    <!--
-    -->
 </body>
 </html>

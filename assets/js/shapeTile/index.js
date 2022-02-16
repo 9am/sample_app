@@ -7,7 +7,7 @@ template.innerHTML = `
             font-size: 1em;
             font-weight: 700;
             font-family: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
-            fill: grey;
+            fill: dimgrey;
             stroke: #EFEEEE;
             stroke-width: 4;
             stroke-opacity: 1;
