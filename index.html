@@ -32,64 +32,31 @@
         }
     </style>
     <style>
-        #skip-to-main {
-            position: absolute;
-            top: -100%;
-            background-color: black;
-            color: white;
-            display: block;
-            width: 100%;
-            text-align: center;
-        }
-        #skip-to-main:focus {
-            top: 0;
-        }
-        .protruding {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 6px 6px 16px rgb(217, 210, 200, 0.52),
-                        -6px -6px 16px rgb(255, 255, 255, 0.84);
-        }
-        .button {
-            cursor: pointer;
-            text-decoration: none;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: #EFEEEE;
-            box-shadow: 6px 6px 16px rgb(217, 210, 200, 0.52),
-                        -6px -6px 16px rgb(255, 255, 255, 0.84);
-        }
-        .button:active:hover {
-            box-shadow: inset 6px 6px 16px rgb(217, 210, 200, 0.52),
-                        inset -6px -6px 16px rgb(255, 255, 255, 0.84);
-        }
-        .button svg {
-            fill: dimgrey;
-            stroke: none;
-        }
-        .button:active:hover svg {
-            fill: none;
-            stroke: dimgrey;
-        }
-        .link {
-            padding: 8px 16px;
-            color: #24292f;
-        }
         body {
+            --font: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
+            --s-1: 8px;
+            --s-2: 16px;
+            --s-3: 24px;
+            --color-bg: #EFEEEE;
+            --color-dark: #24292f;
+            --color-normal: dimgrey;
+            --color-light: whitesmoke;
+            --shadow-ele-t: 6px 6px 16px rgb(217, 210, 200, 0.52);
+            --shadow-ele-b: -6px -6px 16px rgb(255, 255, 255, 0.84);
+            --border-ele: 1px solid rgba(255, 255, 255, 0.2);
+            --banner-size: 200px;
+            --victor-stroke: var(--color-normal);
             display: flex;
             flex-direction: column;
-            font-family: 'Helvetica Neue',
-               'Arial Nova',
-                Helvetica,
-                Arial,
-                sans-serif;
-            background-color: #EFEEEE;
-            color: #24292f;
+            font-family: var(--font);
+            background-color: var(--color-bg);
+            color: var(--color-font);
         }
         header, footer {
             flex: 0 0 auto;
             position: relative;
-            height: 200px;
-            background-color: whitesmoke;
+            height: var(--banner-size);
+            background-color: var(--color-light);
             text-align: center;
         }
         main {
@@ -97,12 +64,12 @@
             display: flex;
             flex-wrap: wrap;
         }
-        footer {
-            margin-top: auto;
-        }
         header .tile {
             position: relative;
             z-index: 1;
+        }
+        footer {
+            margin-top: auto;
         }
         .logo {
             position: absolute;
@@ -111,44 +78,97 @@
             transform: translate(-50%, -50%);
             font-size: larger;
         }
+        #skip-to-main {
+            position: absolute;
+            top: -100%;
+            z-index: 999;
+            background-color: var(--color-dark);
+            color: white;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        #skip-to-main:focus {
+            top: 0;
+        }
+        .elevation {
+            border: var(--border-ele);
+            box-shadow: var(--shadow-ele-t), var(--shadow-ele-b);
+        }
+        .button {
+            padding: 0;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: var(--s-1);
+            border: var(--border-ele);
+            background-color: var(--color-bg);
+            box-shadow: var(--shadow-ele-t), var(--shadow-ele-b);
+            color: var(--color-normal);
+        }
+        .button:active:hover {
+            box-shadow: inset var(--shadow-ele-t), inset var(--shadow-ele-b);
+            color: var(--color-dark);
+        }
+        .button .icon {
+            fill: var(--color-normal);
+        }
+        .button:active:hover .icon {
+            fill: var(--color-dark);
+        }
+        .button.small {
+            padding: 0 var(--s-1);
+            font-size: x-small;
+        }
+        .button.medium {
+            padding: var(--s-1) var(--s-1);
+            font-size: medium;
+        }
         .item {
             display: flex;
             flex-direction: column;
             flex: 0 0 50%;
-            padding: 24px;
+            padding: var(--s-3);
         }
         .item > .button {
             flex: 2 0;
         }
         .item > .info {
             flex: 1 1;
-            margin: 8px 0 0 0;
+            margin: var(--s-1) 0 0 0;
             position: relative;
-        }
-        .info::after {
-            position: absolute;
-            bottom: -24px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            border-radius: 2px;
-            content: '';
-            background-color: #EFEEEE;
-            box-shadow: inset 1px 1px 2px rgb(217, 210, 200, 0.52),
-                        inset -1px -1px 2px rgb(255, 255, 255, 0.84);
-        }
-        .item:last-child .info::after {
-            visibility: hidden;
         }
         .item .victor {
             height: 100%;
             display: flex;
             align-items: center;
             padding: 4px;
-            --victor-stroke: dimgrey;
         }
-        .button > * {
-            vertical-align: sub;
+        .info .date {
+            font-size: small;
+            color: #999;
+        }
+        .info .tags {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .tags .button {
+            margin: var(--s-1) var(--s-1) 0 0;
+        }
+        .info::after {
+            --shadow-ele-t: 1px 1px 2px rgb(217, 210, 200, 0.52);
+            --shadow-ele-b: -1px -1px 2px rgb(255, 255, 255, 0.84);
+            position: absolute;
+            bottom: calc(var(--s-3) * -1);
+            left: 0;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            content: '';
+            background-color: var(--color-bg);
+            box-shadow: inset var(--shadow-ele-t), inset var(--shadow-ele-b);
+        }
+        .item:last-child .info::after {
+            visibility: hidden;
         }
         .icon {
             display: inline-block;
@@ -160,10 +180,12 @@
             bottom: 0;
             left: 0;
             display: flex;
+            align-items: center;
+            line-height: 0;
             width: 100%;
         }
         .button-group .button {
-            margin: 0 8px 8px 8px;
+            margin: 0 var(--s-1) var(--s-1) var(--s-1);
         }
         .button-group .button:last-child {
             margin-left: auto;
@@ -171,6 +193,7 @@
         .button-group em {
             display: none;
         }
+        /* media query */
         @media (prefers-color-scheme: dark) {
             html {
                 filter: invert(1) hue-rotate(.5turn);
@@ -192,27 +215,61 @@
                 flex-direction: row;
             }
             .item > .info {
-                margin: 0 0 0 24px;
+                margin: 0 0 0 var(--s-3);
             }
         }
         @media screen and (max-width: 600px) {
+            body {
+                --r: 4px;
+            }
             .item {
                 flex: 0 0 100%;
                 flex-direction: column;
             }
             .item > .info {
-                margin: 8px 0 0 0;
+                margin: var(--s-1) 0 0 0;
             }
+        }
+        .logo-svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            max-width: 200px;
+            font-weight: 700;
+            font-family: var(--font);
+            fill: var(--color-normal);
+            stroke: var(--color-bg);
+            stroke-width: 4;
+            stroke-opacity: 1;
+            stroke-linejoin: round;
+            paint-order: stroke;
+            dominant-baseline: ideographic;
+            text-anchor: end;
         }
     </style>
 </head>
 <body>
-    <header id="top" class="protruding">
+    <header id="top" class="elevation">
         <a id="skip-to-main" href="#main">Skip to main content</a>
-        <shape-tile class="tile" title="9am"></shape-tile>
-        <h1 class="logo">
-            9am
-        </h1>
+        <shape-tile class="tile"></shape-tile>
+        <svg class="logo-svg" viewBox="0 0 51 24" preserveAspectRatio="xMidYMid slice" focusable="false" aria-hidden="true">
+            <filter id="inset-shadow">
+                <feOffset dx='0.8' dy='0.8' />
+                <feGaussianBlur stdDeviation='0.6' result='offset-blur' />
+                <feComposite operator='out' in='SourceGraphic' in2='offset-blur' result='inverse' />
+                <feFlood flood-color='rgb(217, 210, 200)' flood-opacity='0.52' result='color' />
+                <feComposite operator='in' in='color' in2='inverse' result='shadow' />
+                <feComposite operator='over' in='shadow' in2='SourceGraphic' />
+            </filter>
+            <g filter="url(#inset-shadow)">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
+                <path d="M13 7H11.5v4.5h-4.5v1.5h6z"></path>
+                <text x="100%" y="100%">9am</text>
+            </g>
+        </svg>
+        <h1 class="logo">9am</h1>
     </header>
     <main id="main">
         <article class="item">
@@ -222,29 +279,29 @@
             <section class="info"></section>
         </article>
     </main>
-    <footer class="protruding">
+    <footer class="elevation">
         <shape-tile class="tile"></shape-tile>
         <div class="button-group">
-            <a class="button link" href="mailto:test@gmail.com">
+            <a class="button medium" href="mailto:test@gmail.com">
                 <svg class="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"></path>
                 </svg>
                 <em>email</em>
             </a>
-            <a class="button link" href="https://github.com/9am/sample_app/issues">
+            <a class="button medium" href="https://github.com/9am/sample_app/issues">
                 <svg class="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3"></path>
                 </svg>
                 <em>github</em>
             </a>
-            <a class="button link" href="./assets/data/rss.xml">
+            <a class="button medium" href="./assets/data/rss.xml">
                 <svg class="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="6.18" cy="17.82" r="2.18"></circle>
                     <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path>
                 </svg>
                 <em>rss</em>
             </a>
-            <a class="button link" href="#top">
+            <a class="button medium" href="#top">
                 <svg class="icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z"></path>
                 </svg>
@@ -298,12 +355,12 @@
                     <h2 class="title">${title}</h2>
                     <time class="date" datetime="${publishedAt}">${new Date(publishedAt).toDateString()}</time>
                     <p class="desc">${desc}</p>
-                    <div>${renderLabels(labels)}</div>
+                    <div class="tags">${renderLabels(labels)}</div>
                 </section>
             </article>
         `;
         const renderLabels = ({ nodes }) => nodes.map(({ name }) => `
-            <a class="button" href="${BASE}/labels/${name}" target="_blank">${name}</a>
+            <a class="button small" href="${BASE}/labels/${name}" target="_blank">${name}</a>
         `).join('');
 
         const createItem = ({ body, number, ...rest }) => {

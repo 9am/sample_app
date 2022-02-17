@@ -3,18 +3,6 @@ template.innerHTML = `
     <style>
         :host {
         }
-        text {
-            font-size: 1em;
-            font-weight: 700;
-            font-family: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
-            fill: dimgrey;
-            stroke: #EFEEEE;
-            stroke-width: 4;
-            stroke-opacity: 1;
-            stroke-linejoin: round;
-            paint-order: stroke;
-            filter: url(#inset-shadow);
-        }
         #group {
             fill: whitesmoke;
             stroke: white;
@@ -22,43 +10,50 @@ template.innerHTML = `
             stroke-opacity: 1;
             filter: url(#inset-shadow);
         }
+        polygon, circle {
+            transition: fill 500ms;
+        }
+        polygon:hover, circle:hover {
+            fill: var(--tile-color-fill, whitesmoke);
+        }
     </style>
     <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" role="img" viewBox="0 0 200 100" preserveAspectRatio="xMidYMid slice">
-        <filter id="inset-shadow">
-            <feOffset dx='0.8' dy='0.8' />
-            <feGaussianBlur stdDeviation='0.6' result='offset-blur' />
-            <feComposite
-                operator='out'
-                in='SourceGraphic'
-                in2='offset-blur'
-                result='inverse'
-            />
-            <feFlood
-                flood-color='rgb(217, 210, 200)'
-                flood-opacity='0.52'
-                result='color'
-            />
-            <feComposite
-                operator='in'
-                in='color'
-                in2='inverse'
-                result='shadow'
-            />
-            <feComposite
-                operator='over'
-                in='shadow'
-                in2='SourceGraphic'
-            />
-        </filter>
+        <defs>
+            <filter id="inset-shadow">
+                <feOffset dx='0.8' dy='0.8' />
+                <feGaussianBlur stdDeviation='0.6' result='offset-blur' />
+                <feComposite
+                    operator='out'
+                    in='SourceGraphic'
+                    in2='offset-blur'
+                    result='inverse'
+                />
+                <feFlood
+                    flood-color='rgb(217, 210, 200)'
+                    flood-opacity='0.52'
+                    result='color'
+                />
+                <feComposite
+                    operator='in'
+                    in='color'
+                    in2='inverse'
+                    result='shadow'
+                />
+                <feComposite
+                    operator='over'
+                    in='shadow'
+                    in2='SourceGraphic'
+                />
+            </filter>
+        </defs>
         <g id="group"></g>
-        <text id="title" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"></text>
     </svg>
 `;
 
 
 export class Tile extends HTMLElement {
     static get observedAttributes() {
-        return ['edge', 'title'];
+        return ['edge'];
     }
 
     constructor() {
@@ -66,7 +61,6 @@ export class Tile extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.appendChild(template.content.cloneNode(true));
         this._$group = this.shadowRoot.querySelector('#group');
-        this._$title = this.shadowRoot.querySelector('#title');
     }
 
     async attributeChangedCallback(name, prev, next) {
@@ -92,10 +86,6 @@ export class Tile extends HTMLElement {
                 edge: this.edge,
             }),
         );
-    }
-
-    _renderTitle() {
-        this._$title.innerHTML = this.title;
     }
 
     _getPoints({
@@ -158,12 +148,9 @@ export class Tile extends HTMLElement {
     }
 
     connectedCallback() {
-        if (!this.hasAttribute('edge')) {
-            this.setAttribute('edge', null);
-        }
-        if (!this.hasAttribute('title')) {
-            this.setAttribute('title', '');
-        }
+        // if (!this.hasAttribute('edge')) {
+        //     this.setAttribute('edge', null);
+        // }
     }
 
     get edge() {
@@ -172,14 +159,6 @@ export class Tile extends HTMLElement {
 
     set edge(val = null) {
         this.setAttribute('edge', val);
-    }
-
-    get title() {
-        return this.getAttribute('title');
-    }
-
-    set title(val = '') {
-        this.setAttribute('title', val);
     }
 
     disconnectedCallback() {
