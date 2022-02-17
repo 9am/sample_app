@@ -11,7 +11,7 @@ template.innerHTML = `
             filter: url(#inset-shadow);
         }
         polygon, circle {
-            transition: fill 500ms;
+            transition: fill 300ms ease-out;
         }
         polygon:hover, circle:hover {
             fill: var(--tile-color-fill, whitesmoke);

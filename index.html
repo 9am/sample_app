@@ -71,6 +71,24 @@
         footer {
             margin-top: auto;
         }
+        .logo-svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            max-width: 200px;
+            font-weight: 700;
+            font-family: var(--font);
+            fill: var(--color-normal);
+            stroke: var(--color-bg);
+            stroke-width: 4;
+            stroke-opacity: 1;
+            stroke-linejoin: round;
+            paint-order: stroke;
+            dominant-baseline: ideographic;
+            text-anchor: end;
+        }
         .logo {
             position: absolute;
             top: 50%;
@@ -229,24 +247,6 @@
             .item > .info {
                 margin: var(--s-1) 0 0 0;
             }
-        }
-        .logo-svg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: 1;
-            transform: translate(-50%, -50%);
-            max-width: 200px;
-            font-weight: 700;
-            font-family: var(--font);
-            fill: var(--color-normal);
-            stroke: var(--color-bg);
-            stroke-width: 4;
-            stroke-opacity: 1;
-            stroke-linejoin: round;
-            paint-order: stroke;
-            dominant-baseline: ideographic;
-            text-anchor: end;
         }
     </style>
 </head>
@@ -433,11 +433,12 @@
             window.addEventListener('scroll', onActive);
             window.addEventListener('resize', onActive);
             try {
-                // await loadMore();
+                await loadMore();
             } catch (err) {
                 console.log('fail:', err);
             }
             [...document.querySelectorAll('.tile')].forEach(tile => {
+                // tile.style.setProperty && tile.style.setProperty('--tile-color-fill', 'black');
                 const edge = Math.floor(Math.random() * 12 + 3);
                 tile.edge = edge > 9 ? 0 : edge;
             });
