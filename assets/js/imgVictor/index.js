@@ -16,8 +16,8 @@ template.innerHTML = `
             overflow: hidden;
         }
         path {
-            stroke: var(--victor-stroke, grey);
-            stroke-width: var(--victor-stroke-width, 2);
+            stroke: var(--victor-stroke, dimgray);
+            stroke-width: var(--victor-stroke-width, 0.2%);
             stroke-linecap: var(--victor-stroke-linecap, round);
         }
         .loading {
@@ -63,11 +63,16 @@ export class ImageVictor extends HTMLElement {
                 try {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d', { alpha: false });
+                    const e = 50e5;
+                    const scale = Math.round(Math.sqrt(e / img.width / img.height));
+                    const width = img.width * scale;
+                    const height = img.height * scale;
                     ctx.imageSmoothingEnabled = false;
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0);
-                    resolve(ctx.getImageData(0, 0, img.width, img.height));
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.filter = 'grayscale(1)';
+                    ctx.drawImage(img, 0, 0, width, height);
+                    resolve(ctx.getImageData(0, 0, width, height));
                 } catch (error) {
                     reject(error);
                 }
@@ -97,7 +102,7 @@ export class ImageVictor extends HTMLElement {
         switch (name) {
             case 'src':
                 if (!this.src) {
-                    return;
+                    break;
                 }
                 try {
                     this._$loading.className = 'loading';
