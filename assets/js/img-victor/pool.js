@@ -26,8 +26,8 @@ class Task {
 }
 
 class Pool {
-    constructor({ url = '', size = 1 }) {
-        this._url = url;
+    constructor({ worker = () => ({}), size = 1 }) {
+        this._worker = worker;
         this._size = size;
         this._running = 0;
         this._workers = [];
@@ -53,7 +53,7 @@ class Pool {
             }
             if (this._running < this._size) {
                 this._running++;
-                resolve(new Worker(this._url));
+                resolve(this._worker());
             }
             reject(`max worker: ${this._size}`);
         });

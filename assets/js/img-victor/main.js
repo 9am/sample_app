@@ -1,10 +1,14 @@
 import Pool from './pool.js';
-const pool = new Pool({
-    url: './assets/js/imgVictor/workers/lsd/lsd.js',
-    size: window.navigator.hardwareConcurrency && window.navigator.hardwareConcurrency > 1
-        ? 2
-        : 1,
-});
+
+const createWorker = async () => {
+    const slowWorker = await import('./workers/lsd/slowWorker.js?raw');
+    return new Worker(
+        URL.createObjectURL(new Blob(
+            [slowWorker.default],
+            {type: 'application/script'},
+        )),
+    );
+};
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -50,7 +54,11 @@ template.innerHTML = `
 `;
 
 
-export class ImageVictor extends HTMLElement {
+const getComponent = ({
+    pool,
+    e = 50e5,
+    duration = 5000,
+}) => class ImageVictor extends HTMLElement {
     static get observedAttributes() {
         return ['src', 'title'];
     }
@@ -63,7 +71,6 @@ export class ImageVictor extends HTMLElement {
                 try {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d', { alpha: false });
-                    const e = 50e5;
                     const scale = Math.round(Math.sqrt(e / img.width / img.height));
                     const width = img.width * scale;
                     const height = img.height * scale;
@@ -95,7 +102,6 @@ export class ImageVictor extends HTMLElement {
     }
 
     async attributeChangedCallback(name, prev, next) {
-        console.log('attr changed:', name, prev, next);
         if (prev === next) {
             return;
         }
@@ -129,7 +135,6 @@ export class ImageVictor extends HTMLElement {
             return;
         }
         const [lines, groups] = await pool.addTask(this._img);
-        // console.log('render- lines:', lines.length, groups.length);
         this._dList = groups.map(
             group => 'M' + group.map(([x1, y1, x2, y2]) => `${x1},${y1} L${x2},${y2} `).join('L'),
         );
@@ -153,7 +158,7 @@ export class ImageVictor extends HTMLElement {
                 { strokeDashoffset: 0 },
             ],
             {
-                duration: 5000,
+                duration: duration,
                 // iterations: Infinity,
             },
         );
@@ -191,7 +196,47 @@ export class ImageVictor extends HTMLElement {
     }
 }
 
-window.customElements.define(
-    'img-victor',
-    ImageVictor,
-);
+class Fallback extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        const svg = this.shadowRoot.querySelector('#svg');
+        const img = document.createElement('img');
+        Array.from(this.attributes).forEach(({ name, value }) => {
+            img.setAttribute(name, value);
+        });
+        svg.replaceWith(img);
+    }
+}
+
+export const register = async ({
+    worker = createWorker,
+    poolSize = 2,
+    tagName = 'img-victor',
+    duration = 5000,
+}) => {
+    try {
+        const pool = new Pool({
+            worker,
+            size: window.navigator.hardwareConcurrency && window.navigator.hardwareConcurrency > 1
+                ? Math.max(1, poolSize)
+                : 1,
+        });
+        const Component = getComponent({
+            pool,
+            duration,
+        });
+        window.customElements.define(
+            tagName,
+            Component,
+        );
+    } catch (err) {
+        window.customElements.define(
+            tagName,
+            Fallback,
+        );
+    }
+};
+
+export default null;

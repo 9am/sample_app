@@ -343,7 +343,10 @@
         </defs>
     </svg>
     <script type="module">
-        import { ImageVictor } from './assets/js/imgVictor/index.js';
+        import { register } from '/assets/js/img-victor/main.js';
+        register({
+            worker: () => new Worker('/assets/js/img-victor/workers/lsd/fastWorker.js'),
+        });
 
         const BASE = 'https://github.com/9am/sample_app';
         const IMG_PROXY = 'https://ik.imagekit.io/94av7hg7apo';
