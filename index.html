@@ -343,9 +343,9 @@
         </defs>
     </svg>
     <script type="module">
-        import { register } from '/assets/js/img-victor/main.js';
+        import { register } from './assets/js/img-victor/main.js';
         register({
-            worker: () => new Worker('/assets/js/img-victor/workers/lsd/fastWorker.js'),
+            worker: () => new Worker('./assets/js/img-victor/workers/lsd/fastWorker.js'),
         });
 
         const BASE = 'https://github.com/9am/sample_app';
