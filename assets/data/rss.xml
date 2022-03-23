@@ -10,7 +10,7 @@
             <link>http://9am.github.io/sample_app/</link>
         </image>
         <language>en-us</language>
-        <lastBuildDate>Mon, 14 Mar 2022 08:39:24 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 23 Mar 2022 05:17:17 GMT</lastBuildDate>
         <managingEditor>test@gmail.com</managingEditor>
         <item>
             <title>test6</title>
@@ -20,6 +20,42 @@
             <pubDate>Sun, 06 Feb 2022 04:16:56 GMT</pubDate>
             <guid>I_kwDOAMKUeM5DD6r1</guid>
             <enclosure url="https://user-images.githubusercontent.com/1435457/149456215-2f425f1d-67d6-44aa-a35b-e27b43aa9e8a.png" />
+        </item>
+        <item>
+            <title>test5</title>
+            <link>https://github.com/9am/sample_app/issues/7</link>
+            <description> oaiwejf erougaoiewjf</description>
+            <author>test@gmail.com</author>
+            <pubDate>Fri, 28 Jan 2022 06:33:28 GMT</pubDate>
+            <guid>I_kwDOAMKUeM5ClNka</guid>
+            <enclosure url="https://user-images.githubusercontent.com/1435457/158134931-212280b0-9557-4a36-a3d5-58e2e6cbc9ae.jpeg" />
+        </item>
+        <item>
+            <title>test4</title>
+            <link>https://github.com/9am/sample_app/issues/6</link>
+            <description> oaiwejf erougaoiewjf</description>
+            <author>test@gmail.com</author>
+            <pubDate>Fri, 28 Jan 2022 06:33:18 GMT</pubDate>
+            <guid>I_kwDOAMKUeM5ClNjC</guid>
+            <enclosure url="https://user-images.githubusercontent.com/1435457/158135033-b76eb4b1-ee23-4b86-8951-a62f03f2b3f2.jpeg" />
+        </item>
+        <item>
+            <title>test3</title>
+            <link>https://github.com/9am/sample_app/issues/5</link>
+            <description> oaiwejf erougaoiewjf</description>
+            <author>test@gmail.com</author>
+            <pubDate>Fri, 14 Jan 2022 09:55:16 GMT</pubDate>
+            <guid>I_kwDOAMKUeM5BxDpg</guid>
+            <enclosure url="https://user-images.githubusercontent.com/1435457/158135178-d549b2eb-f70d-4f23-8db0-5f5d77d562bf.jpeg" />
+        </item>
+        <item>
+            <title>test2</title>
+            <link>https://github.com/9am/sample_app/issues/3</link>
+            <description>Test the title Test the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the titleTest the title</description>
+            <author>test@gmail.com</author>
+            <pubDate>Fri, 14 Jan 2022 05:25:21 GMT</pubDate>
+            <guid>I_kwDOAMKUeM5Bvonh</guid>
+            <enclosure url="https://user-images.githubusercontent.com/1435457/149456404-58353e24-f84a-4dff-9855-91bb76362930.png" />
         </item>
     </channel>
 </rss>
